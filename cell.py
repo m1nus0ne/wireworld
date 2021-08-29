@@ -10,6 +10,6 @@ class Cell(object):
     def draw(self):
         x,y = self.cord
         pg.draw.rect(surface=SCREEN, color=self.status.value, rect=(x,y,self.size,self.size))
-        pg.draw.rect(surface=SCREEN, color=self.status.value, rect=(x,y,self.size,self.size),width=2)
+        pg.draw.rect(surface=SCREEN, color=COLOUR.WHITE.value, rect=(x,y,self.size,self.size),width=1)
 
 

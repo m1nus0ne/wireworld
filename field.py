@@ -1,15 +1,14 @@
 from cell import Cell
 from config import *
 from time import sleep
+from copy import deepcopy
 
 
 class Field(object):
-    def __init__(self, width: int, height: int, frequency: int,  last_update=None):
+    def __init__(self, width: int, height: int, frequency: int):
         self.width = width
         self.height = height
         self.frequency = frequency
-
-        self.last_update = last_update
 
     def gen(self, size):
         self.cellSize = size
@@ -21,22 +20,22 @@ class Field(object):
             for cell in line:
                 cell.draw()
 
-    def update(self, current_time):
-        if self.frequency != 0:
-            if self.last_update - current_time >= self.frequency:
-                new_field = self.field.copy()
-                for x in range(len(self.field)):
-                    for y in range(len(self.field[x])):
-                        if self.field[x][y].status == COLOUR.BLACK:
-                            pass
-                        elif self.field[x][y].status == COLOUR.YELLOW:
-                            if checkNear(self.field, x, y):
-                                new_field[x][y].status = COLOUR.BLUE
-                        elif self.field[x][y].status == COLOUR.BLUE:
-                            new_field[x][y].status = COLOUR.RED
-                        else:
-                            new_field[x][y].status = COLOUR.YELLOW
-                    self.field = new_field
+    def update(self):
+        new_field = deepcopy(self.field)
+        for x in range(len(self.field)):
+            for y in range(len(self.field[x])):
+                if self.field[x][y].status == COLOUR.BLACK:
+                    pass
+                elif self.field[x][y].status == COLOUR.YELLOW:
+                    if checkNear(self.field, x, y):
+                        print(1)
+                        new_field[x][y].status = COLOUR.BLUE
+                elif self.field[x][y].status == COLOUR.BLUE:
+                    new_field[x][y].status = COLOUR.RED
+                if self.field[x][y].status == COLOUR.RED:
+                    new_field[x][y].status = COLOUR.YELLOW
+            self.field = new_field
+
 
     def changeStatus(self, cord: tuple[int, int], new_status: COLOUR):
         x, y = [_ // self.cellSize for _ in cord]
@@ -49,7 +48,7 @@ def checkNear(matr: list[list[Cell]], x: int, y: int):
         for b in range(-1, 2):
             try:
                 if matr[x + a][y + b].status == COLOUR.BLUE:
-                    if a != 0 and b != 0:
+
                         counter += 1
             except IndexError:
                 pass

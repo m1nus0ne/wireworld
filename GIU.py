@@ -1,13 +1,21 @@
 import sys
 import time
+from func import *
 
 import pygame as pg
 from config import *
 from cell import Cell
 from field import Field
 
-field = Field(WIDTH, HEIGHT, 10, 0)
+field = Field(WIDTH, HEIGHT, 1)
 field.gen(CELLSIZE)
+last_upd = time.time()
+def frq_switch():
+    global IsUpd
+    if IsUpd:
+        IsUpd = False
+    else:
+        IsUpd = True
 
 while IsRunning:
     for event in pg.event.get():
@@ -24,7 +32,10 @@ while IsRunning:
             if event.key == pg.K_4:
                 field.changeStatus(pg.mouse.get_pos(), COLOUR.RED)
             if event.key == pg.K_SPACE:
-                field.frequency = 0
-    field.update(time.time())
+                frq_switch()
+                print(IsUpd)
+    if time.time() - last_upd >= field.frequency and IsUpd:
+        field.update()
+        last_upd = time.time()
     field.draw()
     pg.display.flip()
