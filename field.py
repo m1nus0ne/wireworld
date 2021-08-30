@@ -25,17 +25,15 @@ class Field(object):
         for x in range(len(self.field)):
             for y in range(len(self.field[x])):
                 if self.field[x][y].status == COLOUR.BLACK:
-                    pass
+                    new_field[x][y].status = COLOUR.BLACK
                 elif self.field[x][y].status == COLOUR.YELLOW:
                     if checkNear(self.field, x, y):
-                        print(1)
                         new_field[x][y].status = COLOUR.BLUE
                 elif self.field[x][y].status == COLOUR.BLUE:
                     new_field[x][y].status = COLOUR.RED
-                if self.field[x][y].status == COLOUR.RED:
+                elif self.field[x][y].status == COLOUR.RED:
                     new_field[x][y].status = COLOUR.YELLOW
-            self.field = new_field
-
+            self.field = deepcopy(new_field)
 
     def changeStatus(self, cord: tuple[int, int], new_status: COLOUR):
         x, y = [_ // self.cellSize for _ in cord]
@@ -47,9 +45,8 @@ def checkNear(matr: list[list[Cell]], x: int, y: int):
     for a in range(-1, 2):
         for b in range(-1, 2):
             try:
-                if matr[x + a][y + b].status == COLOUR.BLUE:
-
-                        counter += 1
+                if matr[x + a][y + b].status == COLOUR.BLUE and not (a == 0 and b == 0):
+                    counter += 1
             except IndexError:
                 pass
     return counter in range(1, 3)
