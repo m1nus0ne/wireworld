@@ -33,7 +33,6 @@ while IsRunning:
                 field.changeStatus(pg.mouse.get_pos(), COLOUR.RED)
             if event.key == pg.K_SPACE:
                 frq_switch()
-                print(IsUpd)
     if time.time() - last_upd >= field.frequency and IsUpd:
         field.update()
         last_upd = time.time()
