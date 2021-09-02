@@ -7,7 +7,7 @@ from config import *
 from cell import Cell
 from field import Field
 
-field = Field(WIDTH, HEIGHT, 1)
+field = Field(WIDTH, HEIGHT, FREQUENCY)
 field.gen(CELLSIZE)
 last_upd = time.time()
 def frq_switch():

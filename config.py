@@ -11,10 +11,10 @@ class COLOUR(Enum):
 
 
 
-HEIGHT = 600
-WIDTH = 400
-CELLSIZE = 20
+HEIGHT = 800
+WIDTH = 600
+CELLSIZE = 40
 SCREEN = pg.display.set_mode((HEIGHT, WIDTH))
-
+FREQUENCY = 1/10
 IsRunning = True
 IsUpd = True

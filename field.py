@@ -33,7 +33,7 @@ class Field(object):
                     new_field[x][y].status = COLOUR.RED
                 elif self.field[x][y].status == COLOUR.RED:
                     new_field[x][y].status = COLOUR.YELLOW
-            self.field = deepcopy(new_field)
+        self.field = deepcopy(new_field)
 
     def changeStatus(self, cord: tuple[int, int], new_status: COLOUR):
         x, y = [_ // self.cellSize for _ in cord]
